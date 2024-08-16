@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "target": "website",
+    "public": "dist/tree-of-light-app",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

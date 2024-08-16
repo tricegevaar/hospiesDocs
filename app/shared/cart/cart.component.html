@@ -1,0 +1,99 @@
+<div class="container mt-3">
+<ngx-spinner
+  bdOpacity = 0.5
+  bdColor = "#000005"
+  size = "default"
+  color = "#1c1b1b"
+  type = "ball-spin-fade-rotating"
+  [fullScreen] = "true"
+>
+  <p style="color: white" > Please wait... </p>
+</ngx-spinner>
+<div class="row donate-banner">
+  <div class="col-12 text-right">
+    <img src="../../../assets/top_red_buble.png"/>
+  </div>
+  <div class="col-12">
+    <h3>YOUR CART ITEMS</h3>
+  </div>
+</div>
+
+
+<div class="row sections-background">
+  <div class="col-md-8">
+    <!--SHIPPING METHOD-->
+    <div class="panel panel-default">
+      <div class="panel-heading text-center"><h4>Cart Items</h4></div>
+      <div class="panel-body">
+        <table class="table borderless">
+          <thead>
+          <tr>
+            <td><strong>Your Cart: # item</strong></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- foreach ($order->lineItems as $line) or some such thing here -->
+          <tr *ngFor="let cartItem of cartItems">
+            <td class="col-md-3">
+              <div class="media">
+                <a class="thumbnail pull-left" href="#"> <img class="media-object" src="" style="width: 50px; height: 50px;"> </a>
+                <div class="media-body ml-3">
+                  <h5 class="media-heading"> {{cartItem.title}} dedicated to : {{cartItem.for}}</h5>
+                  <p class="media-heading">{{cartItem.message}}</p>
+                </div>
+              </div>
+            </td>
+            <td class="text-right">{{cartItem.cost|currency:'R':'code'}}</td>
+            <td class="text-right"><button type="button" class="btn btn-danger">Remove</button></td>
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--SHIPPING METHOD END-->
+  </div>
+
+    <div class="col-md-4">
+      <!--REVIEW ORDER-->
+      <div class="panel panel-default">
+        <div class="panel-heading text-center">
+          <h4>Review Order</h4>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-12">
+            <strong>Subtotal (# item)</strong>
+            <div class="pull-right"><span>{{cartTotal| currency: 'R':'code'}}</span></div>
+          </div>
+          <div class="col-md-12">
+            <strong>Shipping</strong>
+            <div class="pull-right"><span>R</span><span>0.00</span></div>
+          </div>
+
+          <div class="col-md-12">
+            <strong>Order Total</strong>
+            <div class="pull-right"><span>{{cartTotal| currency: 'R':'code'}}</span></div>
+            <hr>
+          </div>
+
+          <div class="col-md-12">
+            <button type="button" class="btn btn-warning btn-lg btn-block" routerLink="/donate">Buy Another Globe</button>
+          </div>
+
+          <div class="col-md-12 mt-2">
+            <button type="button" class="btn btn-primary btn-lg btn-block"
+                    [routerLink]="['/payment',{cartTotal:cartTotal , name:'Angular'}] ">Checkout</button>
+          </div>
+
+
+        </div>
+
+      </div>
+      <!--REVIEW ORDER END-->
+    </div>
+</div>
+</div>

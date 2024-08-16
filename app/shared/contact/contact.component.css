@@ -1,0 +1,49 @@
+.bg {
+  color: #fff;
+
+}
+.contact-form{
+  background: #fff;
+  margin-bottom: 5%;
+}
+.contact-form .form-control{
+  border-radius:0.5rem;
+}
+
+.contact-form form{
+  padding: 14%;
+}
+.contact-form form .row{
+  margin-bottom: -7%;
+}
+.contact-form h3{
+  font-size: 32pt;
+  text-align: center;
+  color: #566382;
+}
+.contact-form h6{
+  margin-bottom: 8%;
+  font-size: 10pt;
+  text-align: center;
+  color: #e5e7ea;
+}
+.contact-form .btnContact {
+  width: 50%;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1.5%;
+  background: #4d7bf3;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+.btnContactSubmit
+{
+  width: 50%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  color: #fff;
+  background-color: #0062cc;
+  border: none;
+  cursor: pointer;
+}

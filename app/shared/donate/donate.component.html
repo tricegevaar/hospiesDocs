@@ -1,0 +1,623 @@
+<div class="container mt-3">
+    <ngx-spinner
+        bdOpacity="0.5"
+        bdColor="#000005"
+        size="default"
+        color="#1c1b1b"
+        type="ball-spin-fade-rotating"
+        [fullScreen]="true"
+    >
+        <p style="color: white">Please wait...</p>
+    </ngx-spinner>
+
+    <!-- HEADER SECTION -->
+    <div class="row donate-banner">
+        <div class="d-none d-sm-block col-lg-12 col-md-12 col-sm-12 text-right">
+            <img src="../../../assets/top_red_buble.png" width="100%" />
+        </div>
+        <div class="col-12">
+            <h3>{{ stringTitle }}</h3>
+            <p style="font-size: 24px">{{ stringDescription }}</p>
+        </div>
+
+        <!--    <button  (click)="logout()" >LOGOUT</button>-->
+    </div>
+    <div class="row globe-for-section">
+        <div class="col-12 text-center mt-3 mb-3">
+            <h3>
+                <span style="letter-spacing: 5px"> Buy A Globe For </span>
+                <input [(ngModel)]="globeFor" type="text" maxlength="30" required placeholder="Enter name here" />
+            </h3>
+        </div>
+    </div>
+    <!-- END OF HEADER SECTION -->
+
+    <!-- STEP ONE : SHOW LIST OF AVAILABLE GLOBES TO BUY -->
+    <div *ngIf="currentStep == 1" class="row sections-background">
+        <!--    <div class="col-md-3point5 col-sm-12 text-center mt-3" *ngFor="let globe of donationGlobes">-->
+        <div class="col-md-3point5 text-center mt-3" *ngFor="let globe of donationGlobes">
+            <a class="pointer" (click)="selectedGlobe(globe)">
+                <h6>{{ globe.title }}</h6>
+                <img src="{{ globe.url }}" /><br />
+                <span [class]="globe.globeClassName">{{ globe.cost | currency : 'R' : 'code' }}</span>
+            </a>
+        </div>
+    </div>
+    <!-- END OF STEP ONE -->
+
+    <!-- START OF STEP 2 -->
+    <div *ngIf="currentStep == 2" class="row sections-background pt-5">
+        <div class="col-md-4 text-center">
+            <h3>You have picked</h3>
+            <img src="{{ dedicationGlobe.url }}" />
+            <h4>{{ dedicationGlobe.title }}</h4>
+        </div>
+        <div class="col-md-4 text-center">
+            <p class="mt-3 text-center">Pick a Color Below</p>
+            <color-circle (onChangeComplete)="setGlobeColor($event)"></color-circle>
+            <button class="btn btn-main mt-5 btn-block" (click)="writeYourMessage()">NEXT</button>
+        </div>
+    </div>
+    <!-- END OF STEP 2 -->
+
+    <!-- START OF STEP 3 -->
+    <div *ngIf="currentStep == 3" class="row sections-background">
+        <div class="col-md-6 offset-md-3 mt-5">
+            <form
+                [formGroup]="dedicationMessageForm"
+                class="form-horizontal"
+                (ngSubmit)="addDedicationMessage(dedicationMessageForm.value)"
+            >
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <textarea
+                                id="message"
+                                name="title"
+                                placeholder="Write your message here"
+                                class="form-control"
+                                type="text"
+                                formControlName="message"
+                                maxlength="160"
+                                minlength="10"
+                                rows="3"
+                                required
+                            ></textarea>
+                        </div>
+                        <p class="text-center"><small>Minimum of 10 characters</small></p>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="radio">
+                                    <label
+                                        ><input
+                                            formControlName="tol"
+                                            type="radio"
+                                            name="tol"
+                                            value="In Memory Of"
+                                            required
+                                        />
+                                        In Memory Of</label
+                                    >
+                                </div>
+                                <div class="radio">
+                                    <label
+                                        ><input
+                                            formControlName="tol"
+                                            type="radio"
+                                            name="tol"
+                                            value="In Celebration Of"
+                                            required
+                                        />
+                                        In Celebration Of</label
+                                    >
+                                </div>
+                                <div class="radio">
+                                    <label
+                                        ><input
+                                            required
+                                            formControlName="tol"
+                                            type="radio"
+                                            name="tol"
+                                            value="Its A Gift For"
+                                        />
+                                        Its A Gift For</label
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="col-md-12 btn btn-main" [disabled]="dedicationMessageForm.invalid">
+                            NEXT
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <!-- END OF STEP 3 -->
+
+    <!-- START STEP 4 -->
+    <div *ngIf="currentStep == 4" class="row sections-background">
+        <div class="col-md-8 col-sm-12 mt-3">
+            <!--SHIPPING METHOD-->
+            <div class="panel panel-default mt-5">
+                <div class="panel-heading text-center"><h4>Cart Items</h4></div>
+                <div class="panel-body">
+                    <table class="table borderless table-responsive">
+                        <thead>
+                            <tr>
+                                <td><strong>Your Cart: # item</strong></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                            <tr *ngFor="let cartItem of cartItems" style="color: #fff">
+                                <td class="col-md-3">
+                                    <div class="media">
+                                        <a class="thumbnail pull-left">
+                                            <img
+                                                class="media-object"
+                                                src="{{ cartItem.treeUrl }}"
+                                                style="width: 30px; height: 50px"
+                                            />
+                                        </a>
+                                        <div class="media-body ml-3">
+                                            <h5 class="media-heading">
+                                                {{ cartItem.title }} dedicated to : {{ cartItem.for }}
+                                            </h5>
+                                            <p class="media-heading">{{ cartItem.message }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-right">{{ cartItem.cost | currency : 'R' : 'code' }}</td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-danger" (click)="removeCartItem(cartItem.id)">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--SHIPPING METHOD END-->
+        </div>
+
+        <div class="col-md-4 col-sm-12 mt-3">
+            <!--REVIEW ORDER-->
+            <div class="panel panel-default mt-5">
+                <div class="panel-heading text-center">
+                    <h4>Review Order</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <strong>Subtotal (# item)</strong>
+                        <div class="pull-right">
+                            <span>{{ cartTotalAmountDue | currency : 'R' : 'code' }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <strong>Shipping</strong>
+                        <div class="pull-right"><span>R</span><span>0.00</span></div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <strong>Order Total</strong>
+                        <div class="pull-right">
+                            <span>{{ cartTotalAmountDue | currency : 'R' : 'code' }}</span>
+                        </div>
+                        <hr />
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-warning btn-lg btn-block" (click)="buyAnotherGlobe()">
+                            Buy Another Globe
+                        </button>
+                    </div>
+
+                    <div class="col-md-12 mt-2">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="doCheckOut()">
+                            Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--REVIEW ORDER END-->
+        </div>
+    </div>
+    <!-- END OF STEP 4 -->
+
+    <!-- START STEP 5 -->
+    <div *ngIf="currentStep == 5" class="row sections-background">
+        <div class="col-md-10 offset-md-1 mt-3">
+            <form [formGroup]="billingDetailsForm" (ngSubmit)="updateBillingDetails(billingDetailsForm.value)">
+                <div class="form-group">
+                    <label for="names">Your Name & Surname</label>
+                    <input
+                        type="text"
+                        name="names"
+                        id="names"
+                        formControlName="names"
+                        class="form-control"
+                        [ngClass]="{
+                            'is-invalid':
+                                billingDetailsForm.get('names').errors &&
+                                (billingDetailsForm.get('names').touched || billingDetailsForm.get('names').dirty)
+                        }"
+                        placeholder="e.g Miss Jane Doe"
+                    />
+                    <div
+                        *ngIf="
+                            (billingDetailsForm.get('names').touched || billingDetailsForm.get('names').dirty) &&
+                            billingDetailsForm.get('names').errors
+                        "
+                        class="invalid-feedback"
+                    >
+                        <div *ngIf="billingDetailsForm.get('names').errors.required">Name and Surname is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailAddress">Email Address</label>
+                    <input
+                        type="email"
+                        class="form-control"
+                        formControlName="emailAddress"
+                        id="emailAddress"
+                        [ngClass]="{
+                            'is-invalid':
+                                billingDetailsForm.get('emailAddress').errors &&
+                                (billingDetailsForm.get('emailAddress').touched ||
+                                    billingDetailsForm.get('emailAddress').dirty)
+                        }"
+                        placeholder="e.g jane@doe.io"
+                    />
+                    <div
+                        *ngIf="
+                            (billingDetailsForm.get('emailAddress').touched ||
+                                billingDetailsForm.get('emailAddress').dirty) &&
+                            billingDetailsForm.get('emailAddress').errors
+                        "
+                        class="invalid-feedback"
+                    >
+                        <div *ngIf="billingDetailsForm.get('emailAddress').errors.required">
+                            Email address is required
+                        </div>
+                        <div *ngIf="billingDetailsForm.get('emailAddress').errors.email">Invalid email address</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactNumber">Contact Number</label>
+                    <input
+                        type="number"
+                        class="form-control"
+                        formControlName="contactNumber"
+                        id="contactNumber"
+                        [ngClass]="{
+                            'is-invalid':
+                                billingDetailsForm.get('contactNumber').errors &&
+                                (billingDetailsForm.get('contactNumber').touched ||
+                                    billingDetailsForm.get('contactNumber').dirty)
+                        }"
+                        placeholder="e.g 0826468770"
+                    />
+                    <div
+                        *ngIf="
+                            (billingDetailsForm.get('contactNumber').touched ||
+                                billingDetailsForm.get('contactNumber').dirty) &&
+                            billingDetailsForm.get('contactNumber').errors
+                        "
+                        class="invalid-feedback"
+                    >
+                        <div *ngIf="billingDetailsForm.get('contactNumber').errors.required">
+                            Contact number is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Billing Address</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="address"
+                        id="address"
+                        placeholder="e.g 123 Street Name"
+                    />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="city">City</label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="city"
+                            id="city"
+                            placeholder="e.g Richards Bay"
+                        />
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="province">Province</label>
+                        <select formControlName="province" id="province" class="form-control">
+                            <option selected>Select Province</option>
+                            <option>Gauteng</option>
+                            <option>KwaZulu Natal</option>
+                            <option>North West</option>
+                            <option>Western Cape</option>
+                            <option>Mpumalanga</option>
+                            <option>Eastern Cape</option>
+                            <option>Lompopo</option>
+                            <option>Northen Cape</option>
+                            <option>Free State</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="code">Zip</label>
+                        <input type="text" formControlName="code" class="form-control" id="code" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="gridCheck" />
+                        <label class="form-check-label" for="gridCheck">
+                            Terms and conditions acknowledgement here
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-main mb-5" [disabled]="billingDetailsForm.invalid">
+                    SAVE & NEXT
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- END OF STEP 5 -->
+
+    <!-- START OF STEP 6 -->
+    <div *ngIf="currentStep == 6" class="row sections-background">
+        <div class="col-md-12 mdl-textfield--align-right mt-3">
+            <h3>Payment Due: {{ cartTotalAmountDue | currency : 'R' : 'code' }}</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <h3 class="text-center">Choose Payment Method</h3>
+            </div>
+
+            <div class="col-md-6 col-sm-12 col-lg-6 mt-3 mb-3 text-center">
+                <a
+                    class="btn btn-main"
+                    href="https://www.payfast.co.za/eng/process?cmd=_paynow&amp;receiver=10170453&amp;item_name={{
+                        orderNumber
+                    }}&amp;amount={{
+                        cartTotalAmountDue
+                    }}&amp;return_url=https%3A%2F%2Ftree-of-light.co.za%2Forder&amp;cancel_url=https%3A%2F%2Ftree-of-light.co.za%2Fcancel"
+                >
+                    PAY ONLINE WITH PAYFAST</a
+                >
+            </div>
+            <div class="col-md-6 col-sm-12 col-lg-6 mt-3 mb-3 text-center">
+                <button data-toggle="modal" data-target="#eftModal" class="btn btn-main">EFT / DIRECT DEPOSIT</button>
+            </div>
+        </div>
+        <!--    <div class="col-md-10 mt-3 mb-3 offset-md-1 text-center">-->
+        <!--      <img src="../../../assets/payfast_logo.jpg" width="100%"/>-->
+        <!--    </div>-->
+
+        <!-- MODAL FOR EFT/ DIRECT BANK DEPOSIT ORDER -->
+        <div
+            class="modal fade"
+            id="eftModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="eftModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eftModalLabel">EFT/ DIRECT BANK DEPOSIT</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="color: #0e0e0e">
+                        <h3>Our Banking Details</h3>
+                        <p>
+                            <strong> Bank Name: </strong> Standard Bank<br />
+                            <strong> Account Holder: </strong> Standard Bank<br />
+                            <strong> Account Number: </strong> 00 691 363 6<br />
+                            <strong> Account Type: </strong> Savings<br />
+                            <strong> Branch Name: </strong> Norwood<br />
+                            <strong> Branch Code: </strong> 004105<br />
+                            <strong> SWIFT Code: </strong> SBZAZAJJ<br />
+                            <strong> Reference: </strong> {{ orderNumber }}
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="createInvoice()">
+                            Complete Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF STEP 6 -->
+
+    <!-- STEP 7 -->
+    <div *ngIf="currentStep == 7" class="row sections-background">
+        <div class="col-md-12 mdl-textfield--align-right mt-3">
+            <div id="invoice">
+                <div id="content" #content class="invoice overflow-auto">
+                    <div style="min-width: 300px">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img
+                                    src="https://services.facilities.co.za/outbound/HospiceDonate/Logo.jpg"
+                                    data-holder-rendered="true"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 company-details">
+                                <h2 class="name">HospiceWits</h2>
+                                <p>50 2nd Avenue, Houghton</p>
+                                <p>Tel: + 27 11 483 9100</p>
+                                <p>Email: info@hospicewits.co.za</p>
+                            </div>
+                        </div>
+
+                        <main>
+                            <div class="row contacts">
+                                <div class="col-md-6 invoice-to">
+                                    <div class="text-gray-light">INVOICE TO:</div>
+                                    <h2 class="to">{{ invoiceDetails.customer }}</h2>
+                                    <div class="address">{{ invoiceDetails.address }}</div>
+                                    <div class="email">{{ invoiceDetails.email }}></div>
+                                </div>
+                            </div>
+                            <div class="row contacts">
+                                <div class="col-md-6 invoice-to">
+                                    <h1 class="invoice-id">INVOICE #: {{ invoiceDetails.reference }}</h1>
+                                    <div class="date">Date of Invoice: {{ invoiceDetails.orderDate }}</div>
+                                    <div class="date"></div>
+                                </div>
+                            </div>
+                            <table cellspacing="0" cellpadding="0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th class="text-left">ITEM DESCRIPTION</th>
+                                        <th class="text-right">QTY</th>
+                                        <th class="text-right">AMOUNT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let cartItems of cartItems">
+                                        <td class="">1</td>
+                                        <td class="text-left">{{ cartItems.title }}</td>
+                                        <td class="qty">1</td>
+                                        <td class="text-right">{{ cartItems.cost }}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="total">TOTAL</td>
+                                        <td class="text-right" style="color: #000">{{ invoiceDetails.total }}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <div class="notices">
+                                <div>BANKING DETAILS:</div>
+                                <div class="notice">
+                                    <p>
+                                        <strong>Account Name:</strong> Hospice Wits<br />
+                                        <strong>Bank Name:</strong> Standard Bank<br />
+                                        <strong>Branch Code:</strong> 004105 (Norwood)<br />
+                                        <strong>Account Number:</strong> 201658186<br />
+                                        <strong>Account Type:</strong> Current Account<br />
+                                        <strong>Reference:</strong> {{ invoiceDetails.reference }}
+                                    </p>
+                                </div>
+                            </div>
+                        </main>
+                        <footer>Invoice was created on a computer and is valid without the signature and seal.</footer>
+                    </div>
+                    <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 offset-3">
+            <button class="btn btn-info" (click)="downloadInvoice()">
+                <i class="fa fa-file-pdf-o"></i> Download Invoice
+            </button>
+        </div>
+    </div>
+
+    <!-- END OF STEP 7 -->
+
+    <!-- STEPS WIZARD -->
+    <div class="row d-none d-sm-block wizard-section pb-5 pt-5">
+        <div class="col-md-10 offset-md-1 mt-5">
+            <div class="stepwizard mt-5">
+                <div class="stepwizard-row text-center">
+                    <div class="stepwizard-step">
+                        <button type="button" class="btn btn-wizard btn-default btn-circle" (click)="currentStep = 1">
+                            1
+                        </button>
+                        <p class="small">Donate a Globe</p>
+                    </div>
+                    <div class="stepwizard-step">
+                        <button
+                            type="button"
+                            class="btn btn-wizard btn-circle"
+                            (click)="currentStep = 2"
+                            [disabled]="!completed1"
+                        >
+                            2
+                        </button>
+                        <p class="small">Pick Your Colour</p>
+                    </div>
+                    <div class="stepwizard-step">
+                        <button
+                            type="button"
+                            class="btn btn-wizard btn-circle"
+                            (click)="currentStep = 3"
+                            [disabled]="!completed2"
+                        >
+                            3
+                        </button>
+                        <p class="small">Write Your Message</p>
+                    </div>
+                    <div class="stepwizard-step">
+                        <button
+                            type="button"
+                            class="btn btn-wizard btn-circle"
+                            (click)="currentStep = 4"
+                            [disabled]="!completed3"
+                        >
+                            4
+                        </button>
+                        <p class="small">Share Your Details</p>
+                    </div>
+                    <div class="stepwizard-step">
+                        <button
+                            type="button"
+                            class="btn btn-wizard btn-circle"
+                            (click)="currentStep = 5"
+                            [disabled]="!completed4"
+                        >
+                            5
+                        </button>
+                        <p class="small">Make a Payment</p>
+                    </div>
+
+                    <div class="stepwizard-step">
+                        <button
+                            type="button"
+                            class="btn btn-wizard btn-circle"
+                            (click)="currentStep = 6"
+                            [disabled]="!completed5"
+                        >
+                            6
+                        </button>
+                        <p class="small">View Your Globe</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

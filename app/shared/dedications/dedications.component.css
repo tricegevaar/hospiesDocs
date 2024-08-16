@@ -1,0 +1,150 @@
+.tree-of-light-banner {
+
+  background-color: #010000;
+  color: #fff;
+}
+
+input {
+  font-size: 22px;
+  font-family: Poppins;
+  /*width: 460px;*/
+
+}
+
+.globes-counter{
+  border-radius: 50%;
+  border: 2px solid #ff3465;
+  padding: 20px;
+  width: 300px;
+  height: 300px;
+}
+
+.globes-counter p {
+  font-family: Poppins;
+  font-size: 80px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  text-align: center;
+  margin-top: 25%;
+  color: #ffffff;
+
+}
+
+.carousel-item {
+  cursor: pointer;
+}
+
+
+.tree-of-light-banner h3 {
+  font-size: 48px;
+  border-bottom: 8px solid #ff3465;
+
+  padding-bottom: 5px;
+  font-stretch: expanded;
+  letter-spacing: 2px;
+  text-align: left;
+  color: #ffffff;
+}
+.search-section {
+  background-color: #000;
+  letter-spacing: 2px;
+
+}
+
+.results {
+  height: 600px;
+  background-color: #141414;
+  letter-spacing: 2px;
+  color: #ffffff;
+}
+
+.record {
+  border: 8px solid #ffffff;
+}
+
+.col-md-4{
+  display: inline-block;
+  margin-left:-4px;
+}
+.col-md-4 img{
+  float:left;
+  width:30%;
+  height:auto;
+}
+body .carousel-indicators li{
+  background-color:red;
+}
+body .carousel-indicators{
+  bottom: 0;
+}
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+  background-color:red;
+}
+body .no-padding{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+input {
+  background: transparent;
+  outline: 0;
+  color: #fff;
+  border-style: dashed;
+  border-width: 0 0 2px;
+  border-color: #ff3465;
+}
+
+input:focus {
+  border-color: #ff3465;
+}
+
+.globes-donated-counter {
+  background-color: #ff3465;
+  font-family: Poppins;
+  font-size: 80px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 4.8px;
+  text-align: center;
+  color: #ffffff;
+}
+
+#globes {
+  position: absolute;
+  top: 150px;
+  left: 680px;
+
+  padding: 5px;
+  background-color: white;
+  border: 2px solid red;
+}
+
+
+tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted #e5e7ea; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #e5e7ea;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

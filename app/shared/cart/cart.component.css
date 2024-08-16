@@ -1,0 +1,22 @@
+.donate-banner {
+
+  background-color: #010000;
+  color: #fff;
+}
+
+.donate-banner h3 {
+  font-size: 58px;
+  padding-bottom: 5px;
+  font-stretch: expanded;
+  font-display: 'Poppins', sans-serif;
+  font-family: Poppins;
+  letter-spacing: 7px;
+  text-align: left;
+  color: #ffffff;
+}
+
+.sections-background {
+  height: 100%;
+  background-color: #010000;
+  color: #fff;
+}

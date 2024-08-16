@@ -1,0 +1,80 @@
+.home-banner {
+    background-color: #000;
+    margin-top: 1px;
+    color: #fff;
+    border-bottom: 8px solid #ff3465;
+}
+
+.banner-heading {
+  margin-top:20px;
+  font-size: 28px;
+  border-bottom: 8px solid #ff3465;
+  padding-bottom: 5px;
+  font-stretch: expanded;
+  letter-spacing: 2px;
+  text-align: left;
+  color: #ffffff;
+
+}
+
+@media all and (max-width:480px) {
+  .small-device-full-button { width: 100%; display:block; }
+}
+
+
+@media all and (max-width:480px) {
+  .center-text { text-align: center; }
+}
+.banner-paragraph {
+
+  font-size: 18px;
+  padding-bottom: 5px;
+  font-stretch: expanded;
+  letter-spacing: 2px;
+  line-height: 30px;
+  text-align: left;
+  color: #ffffff;
+}
+
+.about {
+  background-color: #1e1e1e;
+  color: #fff;
+  font-size: 28px;
+}
+
+.about-tree-of-light {
+  font-family: Poppins;
+  color: #ffffff;
+  background-color: #1e1e1e;
+}
+.about-tree-of-light-paragraph{
+  font-size: 16px;
+
+}
+
+p {
+  font-size: 13px;
+}
+.globes-counter{
+  border-radius: 50%;
+  border: 2px solid #ff3465;
+  padding: 10px;
+  width: 200px;
+  height: 200px;
+}
+
+.globes-counter p {
+  font-family: Poppins;
+  font-size: 68px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  text-align: center;
+  margin-top: 20%;
+  color: #ffffff;
+
+}
+
+
+
+
